@@ -1,8 +1,8 @@
 {
-    "name": "continuous-pipe/events",
+    "name": "sroze/events",
     "autoload": {
-        "psr-0": {
-            "ContinuousPipe\\": "src/"
+        "psr-4": {
+            "Sam\\Events\\": "src/"
         }
     }
 }
