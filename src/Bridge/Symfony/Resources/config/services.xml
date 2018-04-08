@@ -6,10 +6,12 @@
 
     <services>
         <service id="sam_events.time_resolver" class="Sam\Events\TimeResolver\NativeTimeResolver" />
-        <service id="sam_events.doctrine_event_store" class="Sam\Events\Bridge\DocDoctrine\DoctrineEventStore">
+        <service id="sam_events.doctrine_event_store" class="Sam\Events\Bridge\Doctrine\DoctrineEventStore" public="true">
             <argument type="service" id="doctrine.orm.entity_manager" />
             <argument type="service" id="serializer" />
             <argument type="service" id="sam_events.time_resolver" />
         </service>
+
+        <service id="Sam\Events\EventStore\EventStore" alias="sam_events.doctrine_event_store" public="true" />
     </services>
 </container>

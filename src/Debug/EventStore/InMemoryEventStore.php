@@ -1,24 +1,21 @@
 <?php
 
-namespace Sam\Events\EventStore;
+namespace Sam\Events\Debug\EventStore;
 
+use Sam\Events\TimeResolver\NativeTimeResolver;
 use Sam\Events\TimeResolver\TimeResolver;
+use Sam\Events\EventStore\EventStore;
+use Sam\Events\EventStore\EventWithMetadata;
+use Sam\Events\EventStore\EventMetadata;
 
 class InMemoryEventStore implements EventStore
 {
-    /**
-     * @var TimeResolver
-     */
     private $timeResolver;
-
-    /**
-     * @var array
-     */
     private $streams = [];
 
-    public function __construct(TimeResolver $timeResolver)
+    public function __construct(TimeResolver $timeResolver = null)
     {
-        $this->timeResolver = $timeResolver;
+        $this->timeResolver = $timeResolver ?: new NativeTimeResolver();
     }
 
     public function store(string $stream, $event)

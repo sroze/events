@@ -4,5 +4,8 @@
         "psr-4": {
             "Sam\\Events\\": "src/"
         }
+    },
+    "require": {
+        "ramsey/uuid": "^3.0"
     }
 }

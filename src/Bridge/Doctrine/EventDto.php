@@ -1,6 +1,6 @@
 <?php
 
-namespace Sam\Events\Bridge\DocDoctrine;
+namespace Sam\Events\Bridge\Doctrine;
 
 use Doctrine\ORM\Mapping as ORM;
 use Ramsey\Uuid\UuidInterface;
@@ -15,9 +15,9 @@ class EventDto
 {
     /**
      * @ORM\Id
-     * @ORM\Column(type="uuid")
+     * @ORM\Column(type="string")
      *
-     * @var UuidInterface
+     * @var string
      */
     private $uuid;
 
@@ -49,7 +49,7 @@ class EventDto
      */
     private $creationDate;
 
-    public function __construct(UuidInterface $uuid, string $stream, string $class, string $jsonSerialized, \DateTimeInterface $creationDate)
+    public function __construct(string $uuid, string $stream, string $class, string $jsonSerialized, \DateTimeInterface $creationDate)
     {
         $this->uuid = $uuid;
         $this->stream = $stream;
@@ -58,41 +58,26 @@ class EventDto
         $this->creationDate = $creationDate;
     }
 
-    /**
-     * @return UuidInterface
-     */
-    public function getUuid(): UuidInterface
+    public function getUuid(): string
     {
         return $this->uuid;
     }
 
-    /**
-     * @return string
-     */
     public function getStream(): string
     {
         return $this->stream;
     }
 
-    /**
-     * @return string
-     */
     public function getClass(): string
     {
         return $this->class;
     }
 
-    /**
-     * @return string
-     */
     public function getJsonSerialized(): string
     {
         return $this->jsonSerialized;
     }
 
-    /**
-     * @return \DateTimeInterface
-     */
     public function getCreationDate(): \DateTimeInterface
     {
         return $this->creationDate;

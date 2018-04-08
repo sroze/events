@@ -1,6 +1,6 @@
 <?php
 
-namespace Sam\Events\Bridge\DocDoctrine;
+namespace Sam\Events\Bridge\Doctrine;
 
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\ORMException;
@@ -9,9 +9,8 @@ use Sam\Events\EventStore\EventStore;
 use Sam\Events\EventStore\EventStoreException;
 use Sam\Events\EventStore\EventWithMetadata;
 use Sam\Events\TimeResolver\TimeResolver;
-use JMS\Serializer\SerializationContext;
-use JMS\Serializer\SerializerInterface;
 use Ramsey\Uuid\Uuid;
+use Symfony\Component\Serializer\SerializerInterface;
 
 class DoctrineEventStore implements EventStore
 {
@@ -19,11 +18,8 @@ class DoctrineEventStore implements EventStore
     private $serializer;
     private $timeResolver;
 
-    public function __construct(
-        EntityManagerInterface $entityManager,
-        SerializerInterface $serializer,
-        TimeResolver $timeResolver
-    ) {
+    public function __construct(EntityManagerInterface $entityManager, SerializerInterface $serializer, TimeResolver $timeResolver)
+    {
         $this->entityManager = $entityManager;
         $this->serializer = $serializer;
         $this->timeResolver = $timeResolver;
@@ -34,14 +30,11 @@ class DoctrineEventStore implements EventStore
      */
     public function store(string $stream, $event)
     {
-        $serializationContext = SerializationContext::create();
-        $serializationContext->setAttribute('should-obfuscate', false);
-
         $dataTransferObject = new EventDto(
-            Uuid::uuid4(),
+            (string) Uuid::uuid4(),
             $stream,
             get_class($event),
-            $this->serializer->serialize($event, 'json', $serializationContext),
+            $this->serializer->serialize($event, 'json'),
             $this->timeResolver->resolve()
         );
 

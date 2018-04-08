@@ -19,8 +19,17 @@ class EventsExtension extends Extension implements PrependExtensionInterface
 
     public function prepend(ContainerBuilder $container)
     {
-        $container->prependExtensionConfig('doctrine', array(
-
-        ));
+        $container->prependExtensionConfig('doctrine', [
+            'orm' => [
+                'mappings' => [
+                    'SamEvents' => [
+                        'is_bundle' => false,
+                        'type' => 'annotation',
+                        'dir' => __DIR__.'/../../Doctrine',
+                        'prefix' => 'Sam\\Events\\Bridge\\Doctrine',
+                    ],
+                ],
+            ],
+        ]);
     }
 }
